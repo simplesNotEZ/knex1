@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const app = express();
 
 const resolutions = require("./routes/resolutions");
 
+app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
@@ -21,8 +23,8 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json({
-      message: err.message,
-      error: req.app.get("env") === "development" ? err.stack : {}
+        message: err.message,
+        error: req.app.get("env") === "development" ? err.stack : {}
     });
 });
 
