@@ -5,7 +5,8 @@ module.exports = {
         return database('resolution');
     },
     read(id){
-        return database('resolution').where('id', id);
+        return database('resolution').where('id', id).returning('*')
+            .then(record => record[0])
     },
     create(resolution){
         return database('resolution').insert(resolution).returning('*')
